@@ -11,13 +11,13 @@ import (
 )
 
 type FirebaseConstant struct {
-	Firebase  *firebase.App
+	App       *firebase.App
 	Firestore *firestore.Client
 	Storage   *storage.Client
 	Auth      *auth.Client
 }
 
-var instance = FirebaseConstant{}
+var Firebase = FirebaseConstant{}
 
 func GetApp() *firebase.App {
 	var config = &firebase.Config{ProjectID: Constants.FIREBASE_PROJECT_ID}
@@ -37,20 +37,20 @@ func init() {
 
 	var err error
 
-	instance.Firebase = app
-	instance.Firestore, err = app.Firestore(context.Background())
+	Firebase.App = app
+	Firebase.Firestore, err = app.Firestore(context.Background())
 
 	if err != nil {
 		panic(err)
 	}
 
-	instance.Storage, err = app.Storage(context.Background())
+	Firebase.Storage, err = app.Storage(context.Background())
 
 	if err != nil {
 		panic(err)
 	}
 
-	instance.Auth, err = app.Auth(context.Background())
+	Firebase.Auth, err = app.Auth(context.Background())
 
 	if err != nil {
 		panic(err)
