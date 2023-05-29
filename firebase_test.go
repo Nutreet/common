@@ -1,4 +1,4 @@
-package main
+package common
 
 import (
 	"context"
@@ -27,6 +27,8 @@ func TestFirestore(t *testing.T) {
 	if firestore == nil {
 		t.Errorf("expected to retrive firestore client, got nil")
 	}
+
+	firestore.Close()
 }
 
 func TestStorage(t *testing.T) {
