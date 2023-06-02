@@ -1,4 +1,4 @@
-name: Create Tag and Release on Master Push
+name: Auto Tag on Master Push
 
 on:
   push:
@@ -6,27 +6,29 @@ on:
       - master
 
 jobs:
-  tag_and_release:
+  tag:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create Tag
+      - name: Get latest tag
+        id: latest_tag
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git tag -a $(date +'%Y%m%d%H%M%S') -m "New tag created"
-          git push origin --tags
+          latest_tag=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=tag::$latest_tag"
 
-    #   - name: Create Release
-    #     uses: actions/create-release@v1
-    #     id: create_release
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #       tag_name: ${{ github.ref }}
-    #       release_name: Release ${{ github.ref }}
-    #       draft: false
-    #       prerelease: false
+      - name: Increment tag version
+        id: increment_tag
+        run: |
+          current_tag=${{ steps.latest_tag.outputs.tag }}
+          version=$(echo $current_tag | sed -E 's/v([0-9]+.[0-9]+.[0-9]+)/\1/')
+          new_version=$(echo $version | awk -F. -v OFS=. '{$NF++; print}')
+          new_tag="v$new_version"
+          echo "::set-output name=new_tag::$new_tag"
+
+      - name: Create tag
+        run: |
+          git tag -a ${{ steps.increment_tag.outputs.new_tag }} -m "New tag created"
+          git push origin ${{ steps.increment_tag.outputs.new_tag }}
