@@ -19,7 +19,7 @@ jobs:
       - name: Get latest tag
         id: latest_tag
         run: |
-          latest_tag=$(git describe --abbrev=0 --tags --match "v*" --always || echo "v1.0.1")
+          latest_tag=$(git describe --abbrev=0 --tags --match "v*.*.*" --always || echo "v1.0.1")
           echo "::set-output name=tag::$latest_tag"
 
       - name: Increment tag version
