@@ -13,11 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Fetch tags
+        run: git fetch --tags --force --prune
+
       - name: Get latest tag
         id: latest_tag
         run: |
-          git fetch --tags --force --prune
-          latest_tag=$(git describe --abbrev=0 --tags || echo "v1.0.1")
+          latest_tag=$(git describe --abbrev=0 --tags --match "v*" --always || echo "v1.0.1")
           echo "::set-output name=tag::$latest_tag"
 
       - name: Increment tag version
