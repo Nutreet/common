@@ -31,7 +31,7 @@ func GetApp() *firebase.App {
 }
 
 func init() {
-	log.Println("Initializing Firebase configuration....")
+	log.Println("Initializing Firebase configuration.....")
 
 	app := GetApp()
 
