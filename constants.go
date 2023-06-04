@@ -18,7 +18,7 @@ type ConstantsType struct {
 var Constants = ConstantsType{}
 
 func init() {
-	log.Println("Loading .env file")
+	log.Println("Loading .env file...")
 	err := godotenv.Load(".env")
 
 	if err != nil {
