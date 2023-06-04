@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     outputs:
-      contents: ${{ steps.bump_version.outputs.new_tag }}
+      new_tag: ${{ steps.bump_version.outputs.new_tag }}
     permissions:
       contents: write
     steps:
@@ -23,24 +23,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
 
-  another-job:
+  pkg:
     runs-on: ubuntu-22.04
     needs: build
 
     steps:
-      - name: Get version
+      - name: Show latest tag
         run: |
-          echo ${{ needs.build.outputs.contents }}
+          echo ${{ needs.build.outputs.new_tag }}
 
-  # pkg:
-  #   needs: build
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - name: Set up Go
-  #       uses: actions/setup-go@v2
-  #       with:
-  #         go-version: 1.19
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
 
-  #     - name: Make package available
-  #       run: |
-  #         GOPROXY=proxy.golang.org go list -m github.com/nutreet/common@${{ needs.build.outputs }} > /dev/null
+      - name: Make package available
+        run: |
+          GOPROXY=proxy.golang.org go list -m github.com/nutreet/common@${{ needs.build.outputs.new_tag }} > /dev/null
