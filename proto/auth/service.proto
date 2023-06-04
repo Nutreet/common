@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/nutreet/common/proto";
+
+service AuthService {
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+}
+
+message RegisterRequest {
+    string email = 1;
+    string password = 2;
+    string repeat_password = 3;
+    string first_name = 4;
+    string last_name = 5;
+}
+
+message RegisterResponse {
+    string uid = 1;
+    string error = 2;
+}
