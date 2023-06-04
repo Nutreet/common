@@ -39,4 +39,4 @@ jobs:
 
       - name: Make package available
         run: |
-          GOPROXY=proxy.golang.org go list -m github.com/nutreet/common@${{ needs.build.outputs.new_tag }} > /dev/null
+          GOPROXY=proxy.golang.org go list -m github.com/nutreet/common@${{ needs.build.outputs.new_tag }} > /dev/null || echo "Could not find package"
