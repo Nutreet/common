@@ -1,4 +1,3 @@
-# example 1: on push to master
 name: Bump version
 
 on:
@@ -8,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    outputs:
+      contents: ${{ steps.bump_version.outputs.new_tag }}
     permissions:
       contents: write
     steps:
@@ -16,7 +17,30 @@ jobs:
           fetch-depth: "0"
 
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
+        id: bump_version
+        uses: anothrNick/github-tag-action@1.64.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+
+  another-job:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Get version
+        run: |
+          echo ${{ needs.build.outputs.contents }}
+
+  # pkg:
+  #   needs: build
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v2
+  #       with:
+  #         go-version: 1.19
+
+  #     - name: Make package available
+  #       run: |
+  #         GOPROXY=proxy.golang.org go list -m github.com/nutreet/common@${{ needs.build.outputs }} > /dev/null
