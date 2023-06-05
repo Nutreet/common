@@ -6,8 +6,8 @@ require (
 	cloud.google.com/go/firestore v1.9.0
 	firebase.google.com/go/v4 v4.11.0
 	github.com/joho/godotenv v1.5.1
-	google.golang.org/grpc v1.53.0 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
+	google.golang.org/grpc v1.53.0
+	google.golang.org/protobuf v1.30.0
 )
 
 require (
