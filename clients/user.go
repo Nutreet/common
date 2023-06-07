@@ -3,13 +3,13 @@ package clients
 import (
 	"context"
 
-	proto "github.com/nutreet/common/proto/auth"
+	proto "github.com/nutreet/common/proto/user"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 type UserClient struct {
-	auth proto.AuthServiceClient
+	auth proto.UserServiceClient
 }
 
 func NewUserClient(addr string) (*UserClient, error) {
@@ -21,7 +21,7 @@ func NewUserClient(addr string) (*UserClient, error) {
 		return nil, err
 	}
 
-	auth := proto.NewAuthServiceClient(conn)
+	auth := proto.NewUserServiceClient(conn)
 
 	return &UserClient{
 		auth,
