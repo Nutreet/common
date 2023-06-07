@@ -9,7 +9,7 @@ import (
 )
 
 type UserClient struct {
-	auth proto.UserServiceClient
+	user proto.UserServiceClient
 }
 
 func NewUserClient(addr string) (*UserClient, error) {
@@ -21,15 +21,25 @@ func NewUserClient(addr string) (*UserClient, error) {
 		return nil, err
 	}
 
-	auth := proto.NewUserServiceClient(conn)
+	user := proto.NewUserServiceClient(conn)
 
 	return &UserClient{
-		auth,
+		user,
 	}, nil
 }
 
 func (c *UserClient) Register(ctx context.Context, req *proto.RegisterRequest) (*proto.RegisterResponse, error) {
-	resp, err := c.auth.Register(ctx, req)
+	resp, err := c.user.Register(ctx, req)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func (c *UserClient) GetAuthenticatedUser(ctx context.Context, req *proto.GetAuthenticatedUserRequest) (*proto.GetAuthenticatedUserResponse, error) {
+	resp, err := c.user.GetAuthenticatedUser(ctx, req)
 
 	if err != nil {
 		return nil, err
