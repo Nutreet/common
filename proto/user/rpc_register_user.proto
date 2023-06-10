@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package gen.user;
+
+option go_package = "github.com/nutreet/common/gen/user;user";
+
+message RegisterRequest {
+    string email = 1;
+    string uid = 2;
+}
+
+message RegisterResponse {
+    string uid = 1;
+}

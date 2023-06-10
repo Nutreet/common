@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package gen.user;
+
+option go_package = "github.com/nutreet/common/gen/user;user";
+
+import "user/user.proto";
+
+message GetAuthenticatedUserRequest {
+    string token = 1;
+}
+
+message GetAuthenticatedUserResponse {
+    string uid = 1;
+    User user = 2;
+}

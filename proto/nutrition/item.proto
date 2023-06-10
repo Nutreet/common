@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package gen.nutrition;
+
+option go_package = "github.com/nutreet/common/gen/nutrition;nutrition";
+
+message Item {
+    string name = 1;
+    int32 price = 2;
+    string company = 3;
+    float portion_size = 4;
+    float calories = 5;
+    float protein = 6;
+    float carbs = 7;
+    float fat = 8;
+}
