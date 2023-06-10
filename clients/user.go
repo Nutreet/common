@@ -3,7 +3,7 @@ package clients
 import (
 	"context"
 
-	proto "github.com/nutreet/common/proto/user"
+	proto "github.com/nutreet/common/gen/user"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
