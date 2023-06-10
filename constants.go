@@ -13,7 +13,8 @@ type ConstantsType struct {
 	FIREBASE_AUTH_EMULATOR_HOST    string
 	FIREBASE_STORAGE_EMULATOR_HOST string
 	FIRESTORE_EMULATOR_HOST        string
-	USER_SERVICE_PORT              string
+	USER_HTTP_PORT                 string
+	USER_GRPC_PORT                 string
 }
 
 var Constants = ConstantsType{}
@@ -32,7 +33,8 @@ func init() {
 		FIREBASE_STORAGE_EMULATOR_HOST = os.Getenv("FIREBASE_STORAGE_EMULATOR_HOST")
 		FIRESTORE_EMULATOR_HOST        = os.Getenv("FIRESTORE_EMULATOR_HOST")
 		TEST                           = os.Getenv("GO_ENV") == "test"
-		USER_SERVICE_PORT              = os.Getenv("USER_SERVICE_PORT")
+		USER_HTTP_PORT                 = os.Getenv("USER_HTTP_PORT")
+		USER_GRPC_PORT                 = os.Getenv("USER_HTTP_PORT")
 	)
 
 	Constants = ConstantsType{
@@ -41,6 +43,7 @@ func init() {
 		FIREBASE_AUTH_EMULATOR_HOST,
 		FIREBASE_STORAGE_EMULATOR_HOST,
 		FIRESTORE_EMULATOR_HOST,
-		USER_SERVICE_PORT,
+		USER_HTTP_PORT,
+		USER_GRPC_PORT,
 	}
 }
