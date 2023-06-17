@@ -11,13 +11,13 @@ import "user/rpc_get_auth_user.proto";
 service UserService {
     rpc Register(RegisterRequest) returns (RegisterResponse) {
         option (google.api.http) = {
-        post: "/user"
+        post: "/"
         body: "*"
         };
     }
     rpc GetAuthenticatedUser(GetAuthenticatedUserRequest) returns (GetAuthenticatedUserResponse) {
         option (google.api.http) = {
-        get: "/user"
+        get: "/"
         };
     }
 }
